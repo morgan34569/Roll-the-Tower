@@ -1,4 +1,4 @@
-#include "SaveManager.h"
+ï»¿#include "SaveManager.h"
 #include "GameManager.h"
 #include "Player.h"
 #include "TileMap.h"
@@ -23,7 +23,7 @@ bool SaveManager::saveGame(const GameManager& gm) {
 
     ofstream out(SAVE_FILE);
     if (!out.is_open()) {
-        cout << "¼¼ÀÌºê ÆÄÀÏÀ» ¿­ ¼ö ¾ø½À´Ï´Ù.\n";
+        cout << "ì„¸ì´ë¸Œ íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n";
         return false;
     }
 
@@ -64,6 +64,13 @@ bool SaveManager::saveGame(const GameManager& gm) {
     out << "playerY=" << tileMap.getPlayerY() << "\n";
     out << "biomeIndex=" << tileMap.getBiomeIndex() << "\n";
 
+    // ðŸ‘‡ [ì¶”ê°€] ë³´ìŠ¤ í´ë¦¬ì–´ íšŸìˆ˜ ë° í´ë¦¬ì–´í•œ ë§µ ê¸°ë¡ ì €ìž¥
+    out << "bossClearCount=" << tileMap.getBossClearCount() << "\n";
+    const auto& clearedBiomes = tileMap.getClearedBiomeIndexes();
+    for (int biomeIdx : clearedBiomes) {
+        out << "clearedBiome=" << biomeIdx << "\n";
+    }
+
     out << "map=";
     for (int y = 0; y < TileMap::SIZE; y++)
         for (int x = 0; x < TileMap::SIZE; x++)
@@ -71,10 +78,9 @@ bool SaveManager::saveGame(const GameManager& gm) {
     out << "\n";
 
     out.close();
-    cout << "°ÔÀÓÀÌ ÀúÀåµÇ¾ú½À´Ï´Ù.\n";
+    cout << "ê²Œìž„ì´ ì €ìž¥ë˜ì—ˆìŠµë‹ˆë‹¤.\n";
     return true;
 }
-
 
 bool SaveManager::loadGame(GameManager& gm) {
     Player& player = gm.getPlayer();
@@ -82,9 +88,12 @@ bool SaveManager::loadGame(GameManager& gm) {
 
     ifstream in(SAVE_FILE);
     if (!in.is_open()) {
-        cout << "¼¼ÀÌºê ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.\n";
+        cout << "ì„¸ì´ë¸Œ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤.\n";
         return false;
     }
+
+    // ðŸ‘‡ [ì¶”ê°€] ë¡œë“œí•  ë•Œ ì´ì „ ë§µ í´ë¦¬ì–´ ë°°ì—´ ì´ˆê¸°í™” (ì•ˆì „ìž¥ì¹˜)
+    tileMap.clearClearedBiomeIndexes();
 
     ItemStorage storage;
 
@@ -155,11 +164,14 @@ bool SaveManager::loadGame(GameManager& gm) {
             if (key == "playerX")    tileMap.setPlayerPos(stoi(val), tileMap.getPlayerY());
             else if (key == "playerY")    tileMap.setPlayerPos(tileMap.getPlayerX(), stoi(val));
             else if (key == "biomeIndex") tileMap.loadBiome(stoi(val));
+            // ë³´ìŠ¤ í´ë¦¬ì–´ íšŸìˆ˜ ë° í´ë¦¬ì–´í•œ ë§µ ê¸°ë¡ ë¶ˆëŸ¬ì˜¤ê¸°
+            else if (key == "bossClearCount") tileMap.setBossClearCount(stoi(val));
+            else if (key == "clearedBiome")   tileMap.addClearedBiomeIndex(stoi(val));
             else if (key == "map")        tileMap.loadMapString(val);
         }
     }
 
     in.close();
-    cout << "°ÔÀÓÀ» ºÒ·¯¿Ô½À´Ï´Ù.\n";
+    cout << "ê²Œìž„ì„ ë¶ˆëŸ¬ì™”ìŠµë‹ˆë‹¤.\n";
     return true;
 }

@@ -37,7 +37,7 @@ private:
 
 public:
     TileMap();
-    TileMap(bool loadMode);   // ← 추가
+    TileMap(bool loadMode);   // ← 로드 모드 생성자
     ~TileMap();
 
     Biome* getBiome() const { return currentBiome; }
@@ -62,5 +62,12 @@ public:
     void monsterReward(Player& player);
     void bossReward(Player& player);
     void startNextMap();
+
+    // 세이브/로드를 위한 데이터 접근 함수 (Getter/Setter)
+    int getBossClearCount() const { return bossClearCount; }
+    void setBossClearCount(int count) { bossClearCount = count; }
+    const std::vector<int>& getClearedBiomeIndexes() const { return clearedBiomeIndexes; }
+    void addClearedBiomeIndex(int index) { clearedBiomeIndexes.push_back(index); }
+    void clearClearedBiomeIndexes() { clearedBiomeIndexes.clear(); }
 };
 #endif

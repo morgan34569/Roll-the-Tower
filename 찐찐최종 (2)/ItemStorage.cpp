@@ -49,11 +49,11 @@ ItemStorage::ItemStorage() {
 
     addItem(new Potion(3001, "소형 체력 포션", 50, 20)); //코드, 이름, 가격, 힐량, 취약 해제, 약화 해제, 힘 추가, 방어력 추가
     addItem(new Potion(3002, "중형 체력 포션", 100, 40));
-    addItem(new Potion(3002, "대형 체력 포션", 150, 50));
+    addItem(new Potion(3005, "대형 체력 포션", 150, 50));
     addItem(new Potion(3003, "만병통치약", 200, 10, 2, 2));
     addItem(new Potion(3004, "정화의 물약", 120, 0, 3, 3));
     addItem(new Potion(3006, "힘의 포션", 150, 0, 0, 0, 1));
-    addItem(new ThrowPotion(3101, "화염 투척 포션", 100, 10, 1));
+    addItem(new ThrowPotion(3101, "화염 투척 포션", 100, 10, 1, Element::FIRE));
     addItem(new ThrowPotion(3103, "폭발성 화염병", 250, 25, 5, 0, 0, Element::FIRE));
     addItem(new Potion(3012, "생명의 이슬", 400, 100, 2, 2, 1, 10, 10));
     addItem(new Potion(3011, "각성의 묘약", 180, 0, 5, 5, 1));
@@ -66,9 +66,9 @@ ItemStorage::ItemStorage() {
     addItem(new ThrowPotion(3114, "맹독 가시탄", 150, 20, 0, 3, 0, Element::NATURE));
     addItem(new ThrowPotion(3109, "쇠약의 저주병", 250, 0, 0, 4, 4));
     addItem(new ThrowPotion(3108, "액체 서리", 180, 15, 0, 0, 2, Element::WATER));
-    addItem(new ThrowPotion(3103, "고대 수류탄", 300, 30, 5, 0, 0));
+    addItem(new ThrowPotion(3105, "고대 수류탄", 300, 30, 5, 0, 0));
     addItem(new ThrowPotion(3102, "산성 플라스크", 150, 5, 0, 3, 0));
-    addItem(new ThrowPotion(3103, "잿빛 눈가루", 120, 0, 0, 0, 4));
+    addItem(new ThrowPotion(3104, "잿빛 눈가루", 120, 0, 0, 0, 4));
     addItem(new ThrowPotion(3107, "부패한 독병", 180, 0, 4, 2, 0));
     addItem(new ThrowPotion(3110, "응축된 벼락", 300, 40, 0, 0, 0));
 }
