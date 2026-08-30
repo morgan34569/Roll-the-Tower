@@ -1,9 +1,2 @@
-﻿Battle.obj : error LNK2001: 확인할 수 없는 외부 기호 "class Biome * currentBattleBiome" (?currentBattleBiome@@3PEAVBiome@@EA)
-Skill.obj : error LNK2001: 확인할 수 없는 외부 기호 "class Biome * currentBattleBiome" (?currentBattleBiome@@3PEAVBiome@@EA)
-ThrowPotion.obj : error LNK2001: 확인할 수 없는 외부 기호 "class Biome * currentBattleBiome" (?currentBattleBiome@@3PEAVBiome@@EA)
-Event.obj : error LNK2019: "public: int __cdecl GameManager::getmoveCount(void)" (?getmoveCount@GameManager@@QEAAHXZ)"public: void __cdecl Event::EventOpen(class Player &,class Biome *,class GameManager &)" (?EventOpen@Event@@QEAAXAEAVPlayer@@PEAVBiome@@AEAVGameManager@@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
-Event.obj : error LNK2019: "public: int __cdecl GameManager::setmoveCount(int)" (?setmoveCount@GameManager@@QEAAHH@Z)"public: void __cdecl Event::EventOpen(class Player &,class Biome *,class GameManager &)" (?EventOpen@Event@@QEAAXAEAVPlayer@@PEAVBiome@@AEAVGameManager@@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
-Main.obj : error LNK2019: "public: __cdecl GameManager::GameManager(void)" (??0GameManager@@QEAA@XZ)main 함수에서 참조되는 확인할 수 없는 외부 기호
-Main.obj : error LNK2019: "public: __cdecl GameManager::GameManager(bool)" (??0GameManager@@QEAA@_N@Z)main 함수에서 참조되는 확인할 수 없는 외부 기호
-Main.obj : error LNK2019: "public: void __cdecl GameManager::start(void)" (?start@GameManager@@QEAAXXZ)main 함수에서 참조되는 확인할 수 없는 외부 기호
-C:\Users\morga\OneDrive\문서\GitHub\Roll the Tower\찐찐최종 (2)\x64\Debug\ConsoleApplication16.exe : fatal error LNK1120: 6개의 확인할 수 없는 외부 참조입니다.
+﻿  ItemStorage.cpp
+  ConsoleApplication16.vcxproj -> C:\Users\morga\OneDrive\문서\GitHub\Roll the Tower\찐찐최종 (2)\x64\Debug\ConsoleApplication16.exe

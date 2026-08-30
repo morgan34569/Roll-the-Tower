@@ -53,7 +53,7 @@ ItemStorage::ItemStorage() {
     addItem(new Potion(3003, "만병통치약", 200, 10, 2, 2));
     addItem(new Potion(3004, "정화의 물약", 120, 0, 3, 3));
     addItem(new Potion(3006, "힘의 포션", 150, 0, 0, 0, 1));
-    addItem(new ThrowPotion(3101, "화염 투척 포션", 100, 10, 1, Element::FIRE));
+    addItem(new ThrowPotion(3101, "화염 투척 포션", 100, 10, 1, 0, 0, Element::FIRE));
     addItem(new ThrowPotion(3103, "폭발성 화염병", 250, 25, 5, 0, 0, Element::FIRE));
     addItem(new Potion(3012, "생명의 이슬", 400, 100, 2, 2, 1, 10, 10));
     addItem(new Potion(3011, "각성의 묘약", 180, 0, 5, 5, 1));

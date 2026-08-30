@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\morga\\OneDrive\\\uBB38\uC11C\\GitHub\\Roll the Tower\\\uCC10\uCC10\uCD5C\uC885 (2)\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2FBAC157-7136-4A2E-A9D3-6952267455F9}|ConsoleApplication16.vcxproj|C:\\Users\\morga\\OneDrive\\\uBB38\uC11C\\GitHub\\Roll the Tower\\\uCC10\uCC10\uCD5C\uC885 (2)\\ItemStorage.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2FBAC157-7136-4A2E-A9D3-6952267455F9}|ConsoleApplication16.vcxproj|solutionrelative:ItemStorage.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ItemStorage.cpp",
+              "DocumentMoniker": "C:\\Users\\morga\\OneDrive\\\uBB38\uC11C\\GitHub\\Roll the Tower\\\uCC10\uCC10\uCD5C\uC885 (2)\\ItemStorage.cpp",
+              "RelativeDocumentMoniker": "ItemStorage.cpp",
+              "ToolTip": "C:\\Users\\morga\\OneDrive\\\uBB38\uC11C\\GitHub\\Roll the Tower\\\uCC10\uCC10\uCD5C\uC885 (2)\\ItemStorage.cpp",
+              "RelativeToolTip": "ItemStorage.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAByAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-08-30T18:51:17.356Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
