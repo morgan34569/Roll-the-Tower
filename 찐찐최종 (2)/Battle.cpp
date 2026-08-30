@@ -3,8 +3,12 @@
 #include "Weapon.h"
 #include <iostream>
 #include <cstdlib>
+#include <thread>
+#include <chrono>
 
 using namespace std;
+
+extern Biome* currentBattleBiome;
 
 bool Battle::lastMonsterEscaped = false;
 
@@ -771,6 +775,7 @@ bool replaceDeadMonster(Player& player, Monster*& monster) {
 }
 
 bool Battle::startMonsterBattle(Player& player, Biome* biome, int stage) {
+    currentBattleBiome = biome;
     lastMonsterEscaped = false;
     Monster* monster = biome->spawnMonster();
     cout << "\n===== " << monster->getName() << " 등장! =====\n";
@@ -840,6 +845,16 @@ bool Battle::startMonsterBattle(Player& player, Biome* biome, int stage) {
 
         int choice;
         cin >> choice;
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+
+            cout << "잘못된 입력입니다. 숫자만 입력해주세요.\n";
+            skipMonsterTurn = true;
+            system("pause");
+            continue;
+        }
 
         if (!poisonAppliedThisTurn && (choice == 1 || choice == 2 || choice == 3 || choice == 4)) {
             player.applyPoisonBeforeAction();
@@ -959,6 +974,7 @@ bool Battle::startMonsterBattle(Player& player, Biome* biome, int stage) {
 }
 
 bool Battle::startBossBattle(Player& player, Biome* biome) {
+    currentBattleBiome = biome;
     Monster* boss = biome->spawnBossMonster();
 
     cout << "\n================================\n";

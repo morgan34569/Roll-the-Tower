@@ -69,7 +69,7 @@ public:
     virtual void applyStageScaling(int stage) {
         if (stage <= 1) return;
 
-        double multiplier = std::pow(1.5, stage - 1);
+        double multiplier = std::pow(1.2, stage - 1);
 
         maxHP = static_cast<int>(maxHP * multiplier);
         hp = maxHP;

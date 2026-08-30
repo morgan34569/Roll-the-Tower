@@ -14,20 +14,22 @@ private:
     int diceChance;
     bool isRunning;
     int currentStage;
+    bool gameCleared;
 
 public:
     GameManager();
     GameManager(bool loadMode);
+    bool isGameCleared() const { return gameCleared; }
     int getmoveCount();
     int setmoveCount(int NUM);
     int getCurrentStage() const { return currentStage; }
-    int getMoveCount() const { return moveCount; }       // 추가
+    int getMoveCount() const { return moveCount; }
     int getDiceValue() const { return diceValue; }
 
-    Player& getPlayer() { return player; }               // 추가
-    const Player& getPlayer() const { return player; }   // 추가
-    TileMap& getMap() { return map; }                    // 추가
-    const TileMap& getMap() const { return map; }        // 추가
+    Player& getPlayer() { return player; }
+    const Player& getPlayer() const { return player; }
+    TileMap& getMap() { return map; }
+    const TileMap& getMap() const { return map; }
 
     void setCurrentStage(int v) { currentStage = v; }
     void setMoveCount(int v) { moveCount = v; }

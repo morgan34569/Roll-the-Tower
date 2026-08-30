@@ -13,34 +13,49 @@
 using namespace std;
 
 // ==========================================
-// BiomeIndex enum (1번 코드에서 추가)
+// 16개 BiomeIndex 확장
 // ==========================================
 enum BiomeIndex {
     BIOME_NORMAL = 0,          // 평원
     BIOME_SNOWFIELD = 1,       // 설원
     BIOME_VOLCANO = 2,         // 화산
-    BIOME_OCEAN = 3,           // 바다
-    BIOME_DESERT = 4,          // 사막
-    BIOME_ANCIENT_ARMORY = 5,  // 고대의 무기고
-    BIOME_THUNDEROUS_PEAK = 6, // 벼락 맞은 골짜기
-    BIOME_ABYSS = 7            // 심연
+    BIOME_ASH_FOREST = 3,      // 재의 숲
+    BIOME_OCEAN = 4,           // 바다
+    BIOME_DESERT = 5,          // 사막
+    BIOME_FOREST = 6,          // 울창한 숲
+    BIOME_POISON_SWAMP = 7,    // 부패한 늪
+    BIOME_ABYSS = 8,           // 심연
+    BIOME_SANCTUARY = 9,       // 성역
+    BIOME_THUNDEROUS_PEAK = 10,// 벼락 맞은 골짜기
+    BIOME_BLOOD_ARENA = 11,    // 피의 투기장
+    BIOME_MYSTERY_ROOM = 12,   // ???의 방
+    BIOME_CURSED_GRAVEYARD = 13,// 저주받은 묘지
+    BIOME_ANCIENT_ARMORY = 14, // 고대의 무기고
+    BIOME_ETERNAL_GLACIER = 15 // 영원의 빙하
 };
 
 static Biome* createBiomeByIndex(int index) {
-    if (index == BIOME_NORMAL)           return new NormalBiome();
-    else if (index == BIOME_SNOWFIELD)   return new Snowfield();
-    else if (index == BIOME_VOLCANO)     return new Volcano();
-    else if (index == BIOME_OCEAN)       return new Ocean();
-    else if (index == BIOME_DESERT)      return new Desert();
-    else if (index == BIOME_ABYSS)       return new Abyss();
-    else if (index == BIOME_THUNDEROUS_PEAK) return new ThunderousPeak();
-    else                                 return new AncientArmory();
+    if (index == BIOME_NORMAL)                return new NormalBiome();
+    else if (index == BIOME_SNOWFIELD)        return new Snowfield();
+    else if (index == BIOME_VOLCANO)          return new Volcano();
+    else if (index == BIOME_ASH_FOREST)       return new AshForest();
+    else if (index == BIOME_OCEAN)            return new Ocean();
+    else if (index == BIOME_DESERT)           return new Desert();
+    else if (index == BIOME_FOREST)           return new Forest();
+    else if (index == BIOME_POISON_SWAMP)     return new PoisonSwamp();
+    else if (index == BIOME_ABYSS)            return new Abyss();
+    else if (index == BIOME_SANCTUARY)        return new Sanctuary();
+    else if (index == BIOME_THUNDEROUS_PEAK)  return new ThunderousPeak();
+    else if (index == BIOME_BLOOD_ARENA)      return new BloodArena();
+    else if (index == BIOME_MYSTERY_ROOM)     return new MysteryRoom();
+    else if (index == BIOME_CURSED_GRAVEYARD) return new CursedGraveyard();
+    else if (index == BIOME_ANCIENT_ARMORY)   return new AncientArmory();
+    else                                      return new EternalGlacier();
 }
 
 // ==========================================
-// 내부 헬퍼 함수들 (1번 코드에서 추가)
+// 내부 헬퍼 함수들
 // ==========================================
-
 void TileMap::setupNewMap() {
     initMap();
     generateMap();
@@ -68,7 +83,7 @@ void TileMap::setupNewMap() {
 void TileMap::applyBiomeTileOverrides() {
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
-            if (map[y][x] == 'B') continue;
+            if (map[y][x] == 'B' || map[y][x] == 'P') continue;
             map[y][x] = currentBiome->getTileOverride(map[y][x]);
         }
     }
@@ -77,23 +92,21 @@ void TileMap::applyBiomeTileOverrides() {
 vector<int> TileMap::makeNextBiomeChoiceIndexes() const {
     vector<int> choices;
 
-    // 세 번째 보스까지 클리어하면 마지막 선택지는 심연만
-    if (bossClearCount >= 3) {
+    // 네 번째 보스까지 클리어하면 마지막 선택지는 심연만
+    if (bossClearCount >= 4) {
         choices.push_back(BIOME_ABYSS);
         return choices;
     }
 
-    // 평원 클리어 후부터 나오는 중간 맵 후보 6개
-    int pool[6] = {
-        BIOME_SNOWFIELD,
-        BIOME_VOLCANO,
-        BIOME_OCEAN,
-        BIOME_DESERT,
-        BIOME_ANCIENT_ARMORY,
-        BIOME_THUNDEROUS_PEAK
+    // 평원(0)과 심연(8)을 제외한 14개의 중간 맵 후보
+    int pool[14] = {
+        BIOME_SNOWFIELD, BIOME_VOLCANO, BIOME_ASH_FOREST, BIOME_OCEAN,
+        BIOME_DESERT, BIOME_FOREST, BIOME_POISON_SWAMP, BIOME_SANCTUARY,
+        BIOME_THUNDEROUS_PEAK, BIOME_BLOOD_ARENA, BIOME_MYSTERY_ROOM,
+        BIOME_CURSED_GRAVEYARD, BIOME_ANCIENT_ARMORY, BIOME_ETERNAL_GLACIER
     };
 
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 14; i++) {
         int biomeIndex = pool[i];
         if (find(clearedBiomeIndexes.begin(), clearedBiomeIndexes.end(), biomeIndex)
             == clearedBiomeIndexes.end()) {
@@ -113,12 +126,11 @@ vector<int> TileMap::makeNextBiomeChoiceIndexes() const {
 }
 
 // ==========================================
-// 기본 생성자 (1번 방식: 첫 진입 평원 고정)
+// 기본 생성자 (첫 진입 평원 고정)
 // ==========================================
 TileMap::TileMap() {
     srand((unsigned int)time(nullptr));
     gold = 100;
-
     bossClearCount = 0;
     clearedBiomeIndexes.clear();
 
@@ -151,7 +163,7 @@ TileMap::TileMap() {
 }
 
 // ==========================================
-// 로드 전용 생성자 (2번 코드에서 유지)
+// 로드 전용 생성자
 // ==========================================
 TileMap::TileMap(bool loadMode) {
     srand((unsigned int)time(nullptr));
@@ -159,11 +171,10 @@ TileMap::TileMap(bool loadMode) {
     bossClearCount = 0;
     clearedBiomeIndexes.clear();
     currentBiomeIndex = BIOME_NORMAL;
-    currentBiome = new NormalBiome(); // 임시, loadBiome()으로 곧 덮어씌워짐
+    currentBiome = new NormalBiome(); // 임시, loadBiome()으로 덮어씌워짐
     initMap();
     playerX = SIZE / 2;
     playerY = SIZE / 2;
-    // generateMap() 안 함 - loadMapString()으로 복원
 }
 
 TileMap::~TileMap() {
@@ -205,9 +216,8 @@ void TileMap::generateMap() {
 }
 
 // ==========================================
-// 세이브/로드용 함수들 (2번 코드에서 유지)
+// 세이브/로드용 함수들
 // ==========================================
-
 int TileMap::getBiomeIndex() const {
     return currentBiomeIndex;
 }
@@ -228,7 +238,6 @@ void TileMap::loadMapString(const std::string& s) {
 // ==========================================
 // 공통 함수들
 // ==========================================
-
 std::vector<std::string> TileMap::getMapLines() const {
     vector<string> lines;
 
@@ -380,10 +389,9 @@ void TileMap::bossReward(Player& player) {
 }
 
 // ==========================================
-// startNextMap (1번 방식: 클리어 기록 기반)
+// startNextMap (클리어 기록 기반 맵 이동)
 // ==========================================
 void TileMap::startNextMap() {
-    // 현재 맵을 클리어 목록에 저장
     if (find(clearedBiomeIndexes.begin(), clearedBiomeIndexes.end(), currentBiomeIndex)
         == clearedBiomeIndexes.end()) {
         clearedBiomeIndexes.push_back(currentBiomeIndex);

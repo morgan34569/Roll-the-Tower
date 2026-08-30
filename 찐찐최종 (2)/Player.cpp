@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 
-Player::Player() : hp(80), maxHP(80), block(0), gold(350), potionCount(3), equippedArmor(nullptr) {
+Player::Player() : hp(100), maxHP(100), block(0), gold(500), potionCount(3), equippedArmor(nullptr) {
     equippedWeapon = new Weapon{ 1001, "기본검", 0, 0 };
 }
 

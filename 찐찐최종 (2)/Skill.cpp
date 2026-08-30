@@ -1,30 +1,37 @@
 ﻿#include "Skill.h"
 #include "Player.h"
 #include "Monster.h"
+#include "Biomes.h"
 #include <iostream>
 
 using namespace std;
+
+// 전투 중인 현재 바이옴을 참조하기 위한 전역 포인터
+extern Biome* currentBattleBiome;
 
 void Skill::printExtraPlayerStatus(Player& player) const {
 }
 
 int applySkillElementMatchup(int damage, Element attackElem, Element defendElem) {
-    if (attackElem == Element::NONE || defendElem == Element::NONE) {
-        return damage;
+    // 1. 속성 상성 계산
+    if (attackElem != Element::NONE && defendElem != Element::NONE) {
+        if ((attackElem == Element::FIRE && defendElem == Element::NATURE) ||
+            (attackElem == Element::NATURE && defendElem == Element::WATER) ||
+            (attackElem == Element::WATER && defendElem == Element::FIRE)) {
+            cout << "[상성 우위] 효과가 뛰어납니다!! (피해량 1.5배)\n";
+            damage = static_cast<int>(damage * 1.5);
+        }
+        else if ((attackElem == Element::FIRE && defendElem == Element::WATER) ||
+            (attackElem == Element::NATURE && defendElem == Element::FIRE) ||
+            (attackElem == Element::WATER && defendElem == Element::NATURE)) {
+            cout << "[상성 열세] 효과가 별로입니다... (피해량 반감)\n";
+            damage = static_cast<int>(damage * 0.5);
+        }
     }
 
-    if ((attackElem == Element::FIRE && defendElem == Element::NATURE) ||
-        (attackElem == Element::NATURE && defendElem == Element::WATER) ||
-        (attackElem == Element::WATER && defendElem == Element::FIRE)) {
-        cout << "[상성 우위] 효과가 뛰어납니다!! (피해량 1.5배)\n";
-        return static_cast<int>(damage * 1.5);
-    }
-
-    if ((attackElem == Element::FIRE && defendElem == Element::WATER) ||
-        (attackElem == Element::NATURE && defendElem == Element::FIRE) ||
-        (attackElem == Element::WATER && defendElem == Element::NATURE)) {
-        cout << "[상성 열세] 효과가 별로입니다... (피해량 반감)\n";
-        return static_cast<int>(damage * 0.5);
+    // 2. 지형(바이옴)별 데미지 보정 적용 (화산, 바다, 고대의 무기고 등)
+    if (currentBattleBiome != nullptr) {
+        damage = currentBattleBiome->modifyDamage(damage, attackElem);
     }
 
     return damage;
@@ -550,13 +557,13 @@ void PiercingStanceSkill::use(Player& player, Monster& monster, Element weaponEl
     cout << "드래곤 차지 사용! 힘을 3 얻었습니다." << "\n";
     player.getStatus().addStrength(3);
 }
+
 std::string HeavenFlameSlashSkill::getDescription() const { return "천화멸섬 - 피해 12"; }
 Skill* HeavenFlameSlashSkill::clone() const { return new HeavenFlameSlashSkill(*this); }
 void HeavenFlameSlashSkill::use(Player& player, Monster& monster, Element weaponElement) {
     int damage = applySkillElementMatchup(player.calculateAttackDamage(12), weaponElement, monster.getElement());
     cout << "천화멸섬 사용! 최종 피해: " << damage << "\n";
     monster.takeDamage(damage);
-
 }
 
 std::string CrimsonExplosionSkill::getDescription() const { return "진홍폭염 - 피해 8, 화상 5"; }
@@ -574,7 +581,6 @@ void VermilionWindSkill::use(Player& player, Monster& monster, Element weaponEle
     int damage = applySkillElementMatchup(player.calculateAttackDamage(6), weaponElement, monster.getElement());
     cout << "주작열풍 사용! 최종 피해: " << damage << "\n";
     monster.takeDamage(damage);
-
 }
 
 std::string RedWingDanceSkill::getDescription() const { return "적익난무 - 힘 2, 화상 3"; }
@@ -594,7 +600,6 @@ void MagmaBreakSkill::use(Player& player, Monster& monster, Element weaponElemen
     int damage = applySkillElementMatchup(player.calculateAttackDamage(7), weaponElement, monster.getElement());
     cout << "마그마 브레이크 사용! 최종 피해: " << damage << "\n";
     monster.takeDamage(damage);
-
 }
 
 std::string VolcanoBurstSkill::getDescription() const { return "볼케이노 버스트 - 피해 4, 화상 3"; }
