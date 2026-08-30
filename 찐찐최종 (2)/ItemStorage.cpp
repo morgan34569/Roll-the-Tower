@@ -49,7 +49,7 @@ ItemStorage::ItemStorage() {
 
     addItem(new Potion(3001, "소형 체력 포션", 50, 20)); //코드, 이름, 가격, 힐량, 취약 해제, 약화 해제, 힘 추가, 방어력 추가
     addItem(new Potion(3002, "중형 체력 포션", 100, 40));
-    addItem(new Potion(3005, "대형 체력 포션", 150, 50));
+    addItem(new Potion(3007, "대형 체력 포션", 150, 50));
     addItem(new Potion(3003, "만병통치약", 200, 10, 2, 2));
     addItem(new Potion(3004, "정화의 물약", 120, 0, 3, 3));
     addItem(new Potion(3006, "힘의 포션", 150, 0, 0, 0, 1));
